@@ -17,8 +17,9 @@ defmodule UiWeb.Router do
   scope "/", UiWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", OwonSpeLive
   end
+
   # Other scopes may use custom stacks.
   # scope "/api", UiWeb do
   #   pipe_through :api

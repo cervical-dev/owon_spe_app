@@ -37,7 +37,7 @@ defmodule UiWeb.Layouts do
     ~H"""
     <header class="navbar px-4 sm:px-6 lg:px-8 border-b">
       <div class="flex-1">
-        <div class="flex w-fit items-center text-2xl">Dashboard</div>
+        <div class="flex w-fit items-center text-2xl font-bold">Power Supply Control Center</div>
       </div>
       <div class="flex-none">
         <ul class="flex flex-column px-1 space-x-4 items-center">
@@ -48,8 +48,8 @@ defmodule UiWeb.Layouts do
       </div>
     </header>
 
-    <main class="px-4 py-20 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl space-y-4">
+    <main class="px-4 py-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl space-y-4">
         {render_slot(@inner_block)}
       </div>
     </main>

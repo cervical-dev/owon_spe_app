@@ -14,7 +14,9 @@ defmodule Ui.Application do
       # Start a worker by calling: Ui.Worker.start_link(arg)
       # {Ui.Worker, arg},
       # Start to serve requests, typically the last entry
-      UiWeb.Endpoint
+      UiWeb.Endpoint,
+      {DynamicSupervisor, name: Ui.PsuSupervisor, strategy: :one_for_one},
+      {DynamicSupervisor, name: Ui.PsuTelemetrySupervisor, strategy: :one_for_one}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

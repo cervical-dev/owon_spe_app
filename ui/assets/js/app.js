@@ -24,12 +24,34 @@ import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import { hooks as colocatedHooks } from "phoenix-colocated/ui"
 import topbar from "../vendor/topbar"
+import vegaEmbed from "vega-embed";
+
+let Hooks = { ...colocatedHooks };
+
+Hooks.VegaChart = {
+	mounted() {
+		// 1. Grab the Elixir-generated spec from the HTML attribute
+		const spec = JSON.parse(this.el.dataset.spec);
+
+		// 2. Embed the chart
+		vegaEmbed(this.el, spec, { actions: false }).then((result) => {
+			this.view = result.view;
+
+			// 3. Listen for lightweight data pushes from the LiveView server
+			this.handleEvent("update_chart", (payload) => {
+				// Replace the "telemetry" dataset with the new array of points
+				console.log(payload);
+				this.view.data('telemetry', payload.points).run();
+			});
+		});
+	}
+};
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
 	longPollFallbackMs: 2500,
 	params: { _csrf_token: csrfToken },
-	hooks: { ...colocatedHooks },
+	hooks: Hooks,
 })
 
 // Show progress bar on live navigation and form submits
