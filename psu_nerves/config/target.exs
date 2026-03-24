@@ -54,7 +54,20 @@ config :vintage_net,
        type: VintageNetEthernet,
        ipv4: %{method: :dhcp}
      }},
-    {"wlan0", %{type: VintageNetWiFi}}
+    {"wlan0",
+     %{
+       type: VintageNetWiFi,
+       vintage_net_wifi: %{
+         networks: [
+           %{
+             key_mgmt: :wpa_psk,
+             ssid: System.fetch_env!("WIFI_SSID"),
+             psk: System.fetch_env!("WIFI_PSK")
+           }
+         ]
+       },
+       ipv4: %{method: :dhcp}
+     }}
   ]
 
 config :mdns_lite,
@@ -93,3 +106,13 @@ config :mdns_lite,
 # Uncomment to use target specific configurations
 
 # import_config "#{Mix.target()}.exs"
+
+config :ui, UiWeb.Endpoint,
+  server: true,
+  http: [
+    # Bind to all interfaces (Ethernet, WiFi, USB)
+    ip: {0, 0, 0, 0},
+    port: 80
+  ],
+  check_origin: false,
+  secret_key_base: System.fetch_env!("SECRET_KEY_BASE")

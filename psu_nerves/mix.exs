@@ -3,7 +3,21 @@ defmodule PsuNerves.MixProject do
 
   @app :psu_nerves
   @version "0.1.0"
-  @all_targets [:bbb, :grisp2, :osd32mp1, :mangopi_mq_pro, :qemu_aarch64, :rpi, :rpi0, :rpi0_2, :rpi2, :rpi3, :rpi4, :rpi5, :x86_64]
+  @all_targets [
+    :bbb,
+    :grisp2,
+    :osd32mp1,
+    :mangopi_mq_pro,
+    :qemu_aarch64,
+    :rpi,
+    :rpi0,
+    :rpi0_2,
+    :rpi2,
+    :rpi3,
+    :rpi4,
+    :rpi5,
+    :x86_64
+  ]
 
   def project do
     [
@@ -38,6 +52,7 @@ defmodule PsuNerves.MixProject do
       {:shoehorn, "~> 0.9.1"},
       {:ring_logger, "~> 0.11.0"},
       {:toolshed, "~> 0.4.0"},
+      {:ui, path: "../ui", targets: @all_targets},
 
       # Allow Nerves.Runtime on host to support development, testing and CI.
       # See config/host.exs for usage.

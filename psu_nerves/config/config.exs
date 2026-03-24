@@ -18,6 +18,8 @@ config :nerves, :firmware, rootfs_overlay: "rootfs_overlay"
 
 config :nerves, source_date_epoch: "1773757648"
 
+import_config "../../ui/config/config.exs"
+
 if Mix.target() == :host do
   import_config "host.exs"
 else
